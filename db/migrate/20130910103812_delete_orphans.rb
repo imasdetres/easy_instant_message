@@ -1,4 +1,4 @@
-class DeleteOrphans < ActiveRecord::Migration
+class DeleteOrphans < ActiveRecord::Migration[4.2]
   def up
     # Delete messages where sender is dead
     User.reset_column_information

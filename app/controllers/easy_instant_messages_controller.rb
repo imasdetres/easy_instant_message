@@ -1,5 +1,5 @@
 class EasyInstantMessagesController < ApplicationController
-  accept_api_auth :index, :show_easy_chat
+  accept_api_auth :index, :read, :show_easy_chat
 
   before_action :require_login
 
@@ -92,7 +92,7 @@ class EasyInstantMessagesController < ApplicationController
     @easy_instant_message = EasyInstantMessage.find(params[:id])
 
     if @easy_instant_message.update_attributes(unread: false)
-      render nothing: true, status: 200
+      head :ok
     end
   end
 

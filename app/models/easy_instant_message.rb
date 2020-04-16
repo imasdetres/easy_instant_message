@@ -7,8 +7,6 @@ class EasyInstantMessage < ActiveRecord::Base
   validates :content, :recipient_id, presence: true
   validate :cant_send_message_to_self
 
-  attr_protected :id
-
   scope :for_user, lambda { |user = User.current| where(recipient_id: user) }
   scope :all_for_user, lambda { |user = User.current| joins(:sender, :recipient).where(users: {status: User::STATUS_ACTIVE}, recipients_easy_instant_messages: {status: User::STATUS_ACTIVE}).where("#{EasyInstantMessage.table_name}.sender_id = :u OR #{EasyInstantMessage.table_name}.recipient_id = :u", {u: user.id}) }
 

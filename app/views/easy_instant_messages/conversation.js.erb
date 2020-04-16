@@ -2,8 +2,7 @@ $("#easy_instant_messages_header").html("<%= j render partial: 'easy_instant_mes
 $("#easy_instant_messages_body").html("<%= j render @conversation %>").append("<%= j render partial: 'easy_instant_messages/conversation/submit_form', locals: { conversation: @conversation } %>");
 
 EasyInstantMessenger.scrollToBottomOfChatWindow();
-
-EasyInstantMessenger.focusSubmitInput();
+if (!window.ERUI || !ERUI.isMobile) EasyInstantMessenger.focusSubmitInput();
 EasyInstantMessenger.watchSubmitInput();
 
 EasyInstantMessenger.setHyperInterval();

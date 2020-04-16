@@ -30,8 +30,8 @@ en:
   project_module_easy_instant_messages: Chat
   text_easy_instant_messages_notifier: You have %{count} new messages
   text_im_chat_with: Chat with
-  title_easy_im_mute_sound: Mute received messages
-  title_easy_im_unmute_sound: Unmute received messages
+  title_easy_im_mute_sound: Mute received chat messages
+  title_easy_im_unmute_sound: Unmute received chat messages
   title_easy_instant_message_check_permission_notification: Grant permission to desktop
     notification
   title_easy_instant_message_indicator: Display address book

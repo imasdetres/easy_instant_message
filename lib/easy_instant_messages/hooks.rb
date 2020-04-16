@@ -1,10 +1,21 @@
 module EasyInstantMessages
   class Hooks < Redmine::Hook::ViewListener
 
-    def view_layouts_base_body_bottom(context={})
-      return unless User.current.logged?
-      if context[:controller].request.format.html?
-          context[:controller].send(:render_to_string, partial: 'easy_instant_messages/render_easy_instant_messages_box', locals: context)
+    if Redmine::Plugin.installed?(:easy_extensions)
+      def view_layouts_base_body_header_bottom(context = {})
+        return unless User.current.logged?
+        if context[:controller].request.format.html?
+          context[:controller].send(:render_to_string,
+                                    partial: 'easy_instant_messages/render_easy_instant_messages_box', locals: context)
+        end
+      end
+    else
+      def view_layouts_base_body_bottom(context = {})
+        return unless User.current.logged?
+        if context[:controller].request.format.html?
+          context[:controller].send(:render_to_string,
+                                    partial: 'easy_instant_messages/render_easy_instant_messages_box', locals: context)
+        end
       end
     end
 

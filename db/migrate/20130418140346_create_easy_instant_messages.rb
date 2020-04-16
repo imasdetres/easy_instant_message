@@ -1,4 +1,4 @@
-class CreateEasyInstantMessages < ActiveRecord::Migration
+class CreateEasyInstantMessages < ActiveRecord::Migration[4.2]
   def up
     create_table :easy_instant_messages, :force => true do |t|
       t.references :sender

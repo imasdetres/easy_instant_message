@@ -2,6 +2,8 @@ window.EasyInstantMessaging = function (opts) {
   var notify;
   var alreadyNotified = [];
   var notificationStorageKey = (window.location.hostname + ".EasyInstantMessenger_NotifiedMessageIDs");
+  const urlPrefix = (window.urlPrefix || '')
+
   if ("localStorage" in window) {
     alreadyNotified = JSON.parse(localStorage.getItem(notificationStorageKey)) || [];
     localStorage.removeItem(notificationStorageKey);
@@ -168,7 +170,7 @@ window.EasyInstantMessaging = function (opts) {
         window.EasyInstantMessenger.openChat();
 
         $.ajax({
-          url: window.urlPrefix +'/easy_instant_messages/' + message.sender_id + '/conversation',
+          url: urlPrefix + '/easy_instant_messages/' + message.sender_id + '/conversation',
           dataType: 'script',
           type: 'GET'
         });
@@ -274,15 +276,14 @@ window.EasyInstantMessaging = function (opts) {
   this.setDefaultInterval = function() {
     window.clearInterval(this.interval);
     this.interval = setInterval(this.checkMessages, options.defaultTime, this);
-  }
+  };
 
   this.setHyperInterval = function() {
     window.clearInterval(this.interval);
     this.interval = setInterval(this.checkMessages, options.hyperTime, this);
   }
 };
-
-$(document).ready(function() {
+EASY.schedule.late(function () {
   $("#easy_instant_messages_toggle").click(function(e) {
     EasyInstantMessenger.toggleChat(e);
   });
@@ -290,19 +291,18 @@ $(document).ready(function() {
   $("#easy_instant_messages_top_close").click(function(e) {
     EasyInstantMessenger.closeChat();
   });
+  // Applied globally on all textareas with the "autoExpand" class
+  $(document)
+      .one('focus.autoExpand', 'textarea.autoExpand', function(){
+        var savedValue = this.value;
+        this.value = '';
+        this.baseScrollHeight = this.scrollHeight;
+        this.value = savedValue;
+      })
+      .on('input.autoExpand', 'textarea.autoExpand', function(){
+        var minRows = 1;//this.getAttribute('data-min-rows')|0, rows;
+        this.rows = minRows;
+        var rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 14);
+        this.rows = minRows + rows;
+      });
 });
-
-// Applied globally on all textareas with the "autoExpand" class
-$(document)
-    .one('focus.autoExpand', 'textarea.autoExpand', function(){
-      var savedValue = this.value;
-      this.value = '';
-      this.baseScrollHeight = this.scrollHeight;
-      this.value = savedValue;
-    })
-    .on('input.autoExpand', 'textarea.autoExpand', function(){
-      var minRows = 1;//this.getAttribute('data-min-rows')|0, rows;
-      this.rows = minRows;
-      rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 14);
-      this.rows = minRows + rows;
-    });

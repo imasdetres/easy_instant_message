@@ -280,6 +280,12 @@ $dark-blue: #0080e5;
       -moz-hyphens: auto;
       -webkit-hyphens: auto;
       hyphens: auto;
+
+      display: flex;
+      flex-direction: column;
+      .easy-content-page &{
+        flex-direction: column-reverse;
+      }
     }
 
     &__submit-form {
@@ -298,6 +304,7 @@ $dark-blue: #0080e5;
     @extend %align-items-flex-end;
     margin-bottom: 5px;
     margin-right: 19px;
+    @extend %flex-shrink-0;
 
     &.mine {
       @extend %flex-direction-row-rewerse;
